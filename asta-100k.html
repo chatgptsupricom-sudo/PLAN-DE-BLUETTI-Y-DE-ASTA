@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ASTA · Categorización para llegar a 100.000 USD/mes</title>
+<meta name="description" content="Plan comercial ASTA: escala de categorías, metas, beneficios y plan de compras para alcanzar 100.000 USD/mes.">
+
+<!-- Tipografías (si no hay internet, cae al stack del sistema sin romper el diseño) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   1. DESIGN TOKENS
+   ========================================================================== */
+:root{
+  /* Marca (muestreado del logo oficial: #008AC8) */
+  --brand:#008AC8;
+  --brand-2:#22B8F0;
+  --brand-3:#7FD8FF;
+  --brand-deep:#003B5C;
+
+  /* Superficies */
+  --ink-950:#040B13;
+  --ink-900:#07131F;
+  --ink-850:#0A1A29;
+  --ink-800:#0E2133;
+
+  /* Categorías del programa */
+  --diamond:#6EE7F9;
+  --gold:#F2B33D;
+  --silver:#C6D2DE;
+  --bronze:#D08A50;
+  --general:#7C93AA;
+
+  /* Semánticos */
+  --green:#2FC98A;
+  --pink:#E1388A;
+
+  /* Texto */
+  --txt:#E9F4FB;
+  --muted:#95B0C6;
+  --muted-2:#6C8AA3;
+
+  /* Líneas y cristal */
+  --line:rgba(146,190,225,.13);
+  --line-2:rgba(146,190,225,.26);
+  --glass:rgba(255,255,255,.045);
+  --glass-2:rgba(255,255,255,.07);
+
+  /* Sombras multicapa */
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.32);
+  --sh-2:0 2px 4px rgba(0,0,0,.4), 0 22px 56px rgba(0,0,0,.48);
+  --sh-brand:0 10px 40px rgba(0,138,200,.28);
+
+  /* Escala fluida: la raíz crece con la pantalla, pero acotada por ANCHO y ALTO.
+     16:9 → 1080p 23px · 1440p 31px · 4K UHD 34px.
+     El límite por altura (2.3vh) evita que en pantallas anchas y bajas
+     (ultrawide 21:9, ventanas cortas) el contenido se salga y haya que
+     hacer scroll durante la presentación. */
+  --root-scale:clamp(16px,min(1.2vw,2.15vh),34px);
+
+  --chrome:clamp(3.35rem,6.4vh,4.4rem);
+  --radius:1.15rem;
+  --radius-lg:1.65rem;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --f-display:"Space Grotesk","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-text:"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,monospace;
+}
+
+/* ==========================================================================
+   2. RESET / BASE
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:var(--root-scale)}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--ink-950);
+  color:var(--txt);
+  font-family:var(--f-text);
+  font-size:clamp(.92rem,1.02vw,1.02rem);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow:hidden;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--f-display);line-height:1.08;letter-spacing:-.02em;font-weight:700}
+p{margin:0}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+table{border-collapse:collapse;width:100%}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;font-family:var(--f-display)}
+:focus-visible{outline:2px solid var(--brand-2);outline-offset:3px;border-radius:6px}
+
+/* ==========================================================================
+   3. FONDO AMBIENTAL (orbes + rejilla + grano)
+   ========================================================================== */
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ambient::before{
+  content:"";position:absolute;inset:-20%;
+  background:
+    radial-gradient(46vw 46vw at 12% 8%, rgba(0,138,200,.30), transparent 62%),
+    radial-gradient(40vw 40vw at 88% 92%, rgba(34,184,240,.18), transparent 64%),
+    radial-gradient(52vw 52vw at 50% 120%, rgba(0,59,92,.55), transparent 70%);
+}
+.ambient::after{
+  content:"";position:absolute;inset:0;opacity:.30;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 50% 40%,#000 0%,transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 40%,#000 0%,transparent 78%);
+}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.42;animation:float 22s ease-in-out infinite}
+.orb.a{width:34vw;height:34vw;background:var(--brand);top:-8vw;left:-6vw}
+.orb.b{width:26vw;height:26vw;background:var(--brand-2);bottom:-8vw;right:-4vw;animation-delay:-7s}
+.orb.c{width:20vw;height:20vw;background:#0B6FA4;top:52%;left:62%;animation-delay:-13s}
+@keyframes float{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(2.5vw,-3vw,0) scale(1.12)}
+}
+
+/* ==========================================================================
+   4. CHROME (barra superior, navegación, progreso)
+   ========================================================================== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:var(--chrome);z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:0 clamp(.9rem,3vw,2.6rem);
+  background:linear-gradient(180deg,rgba(4,11,19,.86),rgba(4,11,19,.30));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  transition:opacity .5s ease,transform .5s var(--ease);
+}
+body.is-cover .topbar{opacity:0;transform:translateY(-100%)}
+.topbar img{height:clamp(1.3rem,2.1vh,1.85rem);width:auto;filter:drop-shadow(0 0 14px rgba(34,184,240,.45))}
+.topbar .tag{
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);
+  font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (max-width:560px){.topbar .tag{display:none}}
+
+.progress{position:fixed;left:0;right:0;bottom:0;height:.2rem;z-index:45;background:rgba(255,255,255,.07)}
+.progress > i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2),var(--brand-3));
+  box-shadow:0 0 18px rgba(34,184,240,.75);
+  transition:width .6s var(--ease);
+}
+
+.navbar{
+  position:fixed;bottom:clamp(.9rem,2.4vh,1.7rem);right:clamp(.9rem,3vw,2.6rem);z-index:45;
+  display:flex;align-items:center;gap:.5rem;
+}
+.nav-btn{
+  width:clamp(2.35rem,4.4vh,3rem);height:clamp(2.35rem,4.4vh,3rem);
+  display:grid;place-items:center;border-radius:.9rem;
+  background:var(--glass);border:1px solid var(--line-2);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:var(--sh-1);
+  transition:transform .3s var(--ease),background .3s,border-color .3s,box-shadow .3s;
+}
+.nav-btn:hover{background:var(--glass-2);border-color:var(--brand-2);transform:translateY(-2px);box-shadow:var(--sh-brand)}
+.nav-btn:active{transform:translateY(0) scale(.94)}
+.nav-btn svg{width:44%;height:44%;stroke:var(--txt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn[disabled]{opacity:.28;pointer-events:none}
+.nav-btn.wide{
+  width:auto;display:inline-flex;align-items:center;justify-content:center;
+  padding:0 clamp(.8rem,1.4vw,1.2rem);font-size:.72rem;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;gap:8px;white-space:nowrap;
+}
+.nav-btn.wide svg{width:1rem;height:1rem;flex:none}
+@media (max-width:520px){.nav-btn.wide{padding:0 12px}.nav-btn.wide span{display:none}}
+
+.counter{
+  position:fixed;bottom:clamp(.9rem,2.4vh,1.7rem);left:clamp(.9rem,3vw,2.6rem);z-index:45;
+  font-family:var(--f-mono);font-size:.74rem;letter-spacing:.1em;color:var(--muted-2);
+  display:flex;align-items:center;gap:.6rem;
+}
+.counter b{color:var(--brand-3);font-weight:600}
+.counter .hint{opacity:.75}
+@media (max-width:720px){.counter .hint{display:none}}
+
+/* ==========================================================================
+   5. MOTOR DE SLIDES
+   ========================================================================== */
+#deck{position:fixed;inset:0;z-index:10}
+.slide{
+  position:absolute;inset:0;
+  display:flex;
+  padding:calc(var(--chrome) + clamp(.65rem,3vh,2.1rem)) clamp(1rem,4vw,4rem) calc(var(--chrome) + clamp(.65rem,3vh,2.1rem));
+  opacity:0;visibility:hidden;
+  transform:translate3d(var(--tx,0),0,0) scale(.982);
+  transition:opacity .48s ease,transform .78s var(--ease),visibility 0s linear .48s;
+  overflow-y:auto;overflow-x:hidden;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:var(--line-2) transparent;
+}
+.slide::-webkit-scrollbar{width:8px}
+.slide::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px}
+.slide.is-active{
+  opacity:1;visibility:visible;transform:none;z-index:3;
+  transition:opacity .55s ease .06s,transform .85s var(--ease),visibility 0s;
+}
+.slide-inner{width:min(78rem,100%);margin:auto;padding-bottom:.15rem}
+
+/* --- Animaciones de entrada (stagger automático vía --i) --- */
+[data-anim],.stagger > *{
+  opacity:0;transform:translate3d(0,16px,0);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+  transition-delay:calc(var(--i,0) * 58ms);
+}
+.slide.is-active [data-anim],
+.slide.is-active .stagger > *{opacity:1;transform:none}
+
+/* ==========================================================================
+   6. COMPONENTES
+   ========================================================================== */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+  color:var(--brand-3);margin-bottom:clamp(.5rem,1.6vh,1rem);
+}
+.eyebrow::before{content:"";width:1.6rem;height:.12rem;border-radius:.12rem;background:linear-gradient(90deg,var(--brand-2),transparent)}
+
+h1,h2{text-wrap:balance}
+h1{font-size:clamp(1.9rem,4.5vw,4.15rem);letter-spacing:-.035em}
+h2{font-size:clamp(1.32rem,2.85vw,2.6rem)}
+h3{font-size:clamp(.98rem,1.42vw,1.28rem)}
+.lead{font-size:clamp(.9rem,1.22vw,1.16rem);color:var(--muted);max-width:74ch}
+.slide-head{margin-bottom:clamp(.9rem,3vh,2.1rem);max-width:96ch}
+.slide-head .lead{margin-top:clamp(.45rem,1.4vh,.9rem)}
+
+.grad{
+  background:linear-gradient(100deg,var(--brand-3),var(--brand-2) 42%,#fff 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* --- Tarjetas de cristal --- */
+.card{
+  position:relative;
+  background:linear-gradient(160deg,rgba(255,255,255,.072),rgba(255,255,255,.022));
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:clamp(.9rem,2.3vw,1.65rem);
+  box-shadow:var(--sh-2);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  overflow:hidden;
+}
+.card::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.10),transparent 42%);
+  opacity:.55;
+}
+.card.flat::after{display:none}
+
+.grid{display:grid;gap:clamp(.65rem,1.5vw,1.25rem)}
+.g-2{grid-template-columns:1fr}
+@media (min-width:900px){.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.g-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,14.5rem),1fr))}
+.g-4{grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr))}
+.split{display:grid;gap:clamp(1rem,3vw,2.75rem);grid-template-columns:1.08fr .92fr;align-items:center}
+.split.top{align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+
+/* --- KPI --- */
+.kpi{padding:clamp(.9rem,2vw,1.5rem)}
+.k-label{
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;
+  color:var(--muted-2);margin-bottom:.5rem;
+}
+/* Filas "etiqueta + barra + valor": una sola rejilla para que las columnas
+   se alineen entre sí y la etiqueta nunca se monte sobre la barra. */
+.fid-grid{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr) auto;
+  gap:.7rem .8rem;
+  align-items:center;
+}
+.fid-grid .num{font-size:.8rem;color:var(--muted);font-weight:600}
+.kpi .k-value{
+  font-family:var(--f-display);font-weight:700;letter-spacing:-.035em;line-height:1;
+  font-size:clamp(1.55rem,3.1vw,2.7rem);font-variant-numeric:tabular-nums;
+}
+.kpi .k-cur{font-size:.55em;color:var(--muted);font-weight:600;letter-spacing:0}
+.kpi .k-sub{margin-top:.55rem;font-size:.78rem;color:var(--muted)}
+.kpi.accent{background:linear-gradient(155deg,rgba(0,138,200,.30),rgba(0,138,200,.06))}
+.kpi.accent{border-color:rgba(34,184,240,.34)}
+.kpi.warn{background:linear-gradient(155deg,rgba(225,56,138,.22),rgba(225,56,138,.04));border-color:rgba(225,56,138,.34)}
+
+/* --- Barras --- */
+.bar{height:.5rem;border-radius:99px;background:rgba(255,255,255,.075);overflow:hidden;position:relative}
+.bar > i{
+  display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  box-shadow:0 0 14px rgba(34,184,240,.5);
+  transition:width 1.15s var(--ease);
+  transition-delay:calc(var(--i,0) * 62ms);
+}
+.bar.tall{height:.75rem}
+.bar > i.diamond{background:linear-gradient(90deg,#0E7490,var(--diamond));box-shadow:0 0 14px rgba(110,231,249,.5)}
+.bar > i.gold{background:linear-gradient(90deg,#8a6410,var(--gold));box-shadow:0 0 14px rgba(242,179,61,.45)}
+.bar > i.silver{background:linear-gradient(90deg,#6b7887,var(--silver))}
+.bar > i.bronze{background:linear-gradient(90deg,#7d4d29,var(--bronze))}
+.bar > i.general{background:linear-gradient(90deg,#3a4b5d,var(--general))}
+.bar > i.neg{background:linear-gradient(90deg,#8d1149,var(--pink));box-shadow:0 0 14px rgba(225,56,138,.45)}
+/* Barra apilada con marcador (usada en Inventario) */
+.bar.stack{display:flex}
+.bar.stack > i{border-radius:0;box-shadow:none}
+.bar.stack > i:first-child{border-radius:.55rem 0 0 .55rem}
+.bar.stack > i:last-of-type{border-radius:0 .55rem .55rem 0}
+.bar .mark{
+  position:absolute;top:-.45rem;bottom:-.45rem;width:.18rem;border-radius:.12rem;z-index:2;
+  background:var(--gold);box-shadow:0 0 12px rgba(242,179,61,.9);
+}
+
+/* --- Chips de categoría --- */
+.chip{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.3rem .75rem;border-radius:99px;
+  font-size:.76rem;font-weight:700;letter-spacing:.03em;
+  border:1px solid transparent;white-space:nowrap;
+}
+.chip::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.chip.diamond{color:var(--diamond);background:rgba(110,231,249,.12);border-color:rgba(110,231,249,.34)}
+.chip.gold{color:var(--gold);background:rgba(242,179,61,.12);border-color:rgba(242,179,61,.34)}
+.chip.silver{color:var(--silver);background:rgba(198,210,222,.12);border-color:rgba(198,210,222,.30)}
+.chip.bronze{color:var(--bronze);background:rgba(208,138,80,.13);border-color:rgba(208,138,80,.34)}
+.chip.general{color:var(--general);background:rgba(124,147,170,.13);border-color:rgba(124,147,170,.30)}
+
+/* --- Tablas --- */
+.tbl-wrap{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+  box-shadow:var(--sh-2);overflow:hidden;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.tbl{font-size:clamp(.74rem,1.02vw,.94rem)}
+.tbl thead th{
+  text-align:left;padding:clamp(.55rem,1.5vh,.95rem) clamp(.65rem,1.4vw,1.15rem);
+  font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;
+  color:var(--brand-3);
+  background:linear-gradient(180deg,rgba(0,138,200,.26),rgba(0,138,200,.09));
+  border-bottom:1px solid rgba(34,184,240,.25);
+  white-space:nowrap;
+}
+.tbl tbody td{
+  padding:clamp(.5rem,1.35vh,.9rem) clamp(.65rem,1.4vw,1.15rem);
+  border-bottom:1px solid var(--line);vertical-align:middle;
+}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr{transition:background .25s}
+.tbl tbody tr:hover{background:rgba(34,184,240,.07)}
+.tbl .r{text-align:right}
+.tbl .num{font-weight:600;letter-spacing:-.01em}
+.tbl .muted{color:var(--muted-2)}
+.tbl tr.row-total{background:linear-gradient(90deg,rgba(0,138,200,.20),rgba(0,138,200,.05))}
+.tbl tr.row-total td{font-weight:700;border-top:1px solid rgba(34,184,240,.3);color:#fff}
+.tbl .cell-bar{min-width:7.5rem}
+.tbl .bar{height:.45rem}
+/* Tabla ancha de 8 columnas (Escala de categorías): cuerpo menor y
+   encabezados que pueden partirse en dos líneas. */
+.tbl-wide{font-size:clamp(.58rem,.78vw,.78rem)}
+.tbl-wide thead th{font-size:clamp(.5rem,.62vw,.63rem);letter-spacing:.07em;white-space:normal}
+.tbl-wide tbody td{padding-left:.55rem;padding-right:.55rem}
+.tbl-note{margin-top:.65rem;font-size:.75rem;color:var(--muted-2);display:flex;gap:.5rem;align-items:flex-start}
+.tbl-note::before{content:"◆";color:var(--brand-2);font-size:.6rem;line-height:1.7}
+
+/* --- Escalera de beneficios --- */
+.ladder{display:grid;gap:clamp(.5rem,1.2vh,.8rem)}
+.step{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(.75rem,1.6vw,1.4rem);align-items:center;
+  padding:clamp(.7rem,1.8vh,1.15rem) clamp(.8rem,1.8vw,1.5rem);
+  border-radius:1.05rem;border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(255,255,255,.06),rgba(255,255,255,.012));
+  box-shadow:var(--sh-1);position:relative;overflow:hidden;
+  transition:transform .35s var(--ease),box-shadow .35s,border-color .35s;
+}
+.step:hover{transform:translateX(.4rem);border-color:var(--line-2)}
+.step .lvl{font-family:var(--f-display);font-weight:700;font-size:clamp(.8rem,1.15vw,1rem);letter-spacing:.02em;width:clamp(4.6rem,8vw,6.5rem)}
+.step .txt{font-size:clamp(.78rem,1.02vw,.94rem);color:var(--muted)}
+.step .txt b{color:var(--txt)}
+.step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:.25rem;background:var(--accent,var(--brand))}
+.step.diamond{--accent:var(--diamond);background:linear-gradient(100deg,rgba(110,231,249,.15),rgba(255,255,255,.012))}
+.step.gold{--accent:var(--gold);background:linear-gradient(100deg,rgba(242,179,61,.14),rgba(255,255,255,.012))}
+.step.silver{--accent:var(--silver);background:linear-gradient(100deg,rgba(198,210,222,.12),rgba(255,255,255,.012))}
+.step.bronze{--accent:var(--bronze);background:linear-gradient(100deg,rgba(208,138,80,.14),rgba(255,255,255,.012))}
+.step.diamond .lvl{color:var(--diamond)}
+.step.gold .lvl{color:var(--gold)}
+.step.silver .lvl{color:var(--silver)}
+.step.bronze .lvl{color:var(--bronze)}
+.step .plus{
+  font-family:var(--f-mono);font-size:.62rem;color:var(--muted-2);
+  border:1px solid var(--line-2);border-radius:.4rem;padding:.05rem .4rem;margin-right:.45rem;vertical-align:1px;
+}
+
+/* --- Alertas / callouts --- */
+.callout{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(.7rem,1.5vw,1.15rem);
+  padding:clamp(.8rem,2vh,1.25rem) clamp(.9rem,1.8vw,1.4rem);
+  border-radius:1rem;border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  box-shadow:var(--sh-1);
+}
+.callout .ico{
+  width:clamp(2rem,3.4vw,2.5rem);height:clamp(2rem,3.4vw,2.5rem);border-radius:.75rem;
+  display:grid;place-items:center;font-weight:800;font-size:1rem;flex:none;
+  background:rgba(34,184,240,.16);border:1px solid rgba(34,184,240,.34);color:var(--brand-3);
+}
+.callout h3{font-size:clamp(.86rem,1.12vw,1.02rem);margin-bottom:.25rem}
+.callout p{font-size:clamp(.74rem,.96vw,.88rem);color:var(--muted)}
+.callout.alert{background:linear-gradient(100deg,rgba(225,56,138,.16),rgba(255,255,255,.012));border-color:rgba(225,56,138,.32)}
+.callout.alert .ico{background:rgba(225,56,138,.18);border-color:rgba(225,56,138,.4);color:#FF8FC0}
+.callout.good{background:linear-gradient(100deg,rgba(47,201,138,.15),rgba(255,255,255,.012));border-color:rgba(47,201,138,.32)}
+.callout.good .ico{background:rgba(47,201,138,.18);border-color:rgba(47,201,138,.4);color:#7FEBC0}
+.callout b{color:#fff}
+
+/* --- Flujo de pasos --- */
+.flow{display:grid;gap:clamp(.55rem,1.3vh,.9rem);counter-reset:s}
+.flow li{
+  counter-increment:s;list-style:none;position:relative;
+  padding:clamp(.7rem,1.7vh,1.05rem) clamp(.8rem,1.7vw,1.25rem) clamp(.7rem,1.7vh,1.05rem) clamp(2.9rem,4.4vw,3.6rem);
+  border-radius:.95rem;border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  font-size:clamp(.78rem,1vw,.92rem);color:var(--muted);box-shadow:var(--sh-1);
+}
+.flow li::before{
+  content:counter(s);position:absolute;left:clamp(.75rem,1.5vw,1.15rem);top:50%;transform:translateY(-50%);
+  width:clamp(1.4rem,2.2vw,1.7rem);height:clamp(1.4rem,2.2vw,1.7rem);border-radius:.55rem;
+  display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:.78rem;
+  background:linear-gradient(140deg,var(--brand),var(--brand-deep));color:#fff;box-shadow:0 6px 18px rgba(0,138,200,.4);
+}
+.flow li b{color:#fff}
+
+/* --- Portada --- */
+.cover{display:grid;gap:clamp(1.25rem,3.4vw,3.4rem);grid-template-columns:1.15fr .85fr;align-items:center}
+@media (max-width:900px){
+  .cover{grid-template-columns:1fr;gap:1.4rem}
+  .cover .mascot-box{max-width:15.5rem;margin-inline:auto}
+}
+.cover .logo{height:clamp(2.6rem,7vh,4.6rem);width:auto;filter:drop-shadow(0 12px 40px rgba(34,184,240,.5))}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.pill{
+  padding:.45rem .9rem;border-radius:99px;font-size:.72rem;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);
+  background:var(--glass);border:1px solid var(--line-2);backdrop-filter:blur(10px);
+}
+.mascot-box{
+  border-radius:1.9rem;padding:clamp(.65rem,1.5vw,1.15rem);position:relative;
+  background:radial-gradient(circle at 50% 38%,#ffffff 0%,#EAF5FC 58%,#D8EAF7 100%);
+  box-shadow:var(--sh-2),0 0 70px rgba(34,184,240,.35);
+  border:1px solid rgba(255,255,255,.5);
+}
+.mascot-box img{width:100%;height:auto;filter:drop-shadow(0 16px 30px rgba(0,60,95,.28))}
+.mascot-box::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(200deg,rgba(255,255,255,.7),transparent 45%);
+}
+.hint{
+  display:inline-flex;align-items:center;gap:.55rem;font-size:.74rem;color:var(--muted-2);
+  border:1px dashed var(--line-2);border-radius:99px;padding:.45rem .95rem;
+}
+kbd{
+  font-family:var(--f-mono);font-size:.7rem;padding:.15rem .45rem;border-radius:.4rem;
+  background:rgba(255,255,255,.08);border:1px solid var(--line-2);
+}
+
+/* --- Bloque de fórmula --- */
+.formula{
+  display:flex;flex-wrap:wrap;align-items:center;gap:clamp(.5rem,1.2vw,.9rem);
+  padding:clamp(.8rem,2vh,1.25rem) clamp(.9rem,2vw,1.5rem);
+  border-radius:1rem;border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(0,138,200,.16),rgba(255,255,255,.012));
+  font-family:var(--f-display);font-weight:600;font-size:clamp(.8rem,1.1vw,1rem);
+}
+.formula .op{color:var(--brand-3);font-weight:700}
+.formula .res{color:var(--brand-3);font-weight:700}
+
+/* --- Comparativa --- */
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(.65rem,1.6vw,1.25rem);align-items:stretch}
+@media (max-width:760px){.vs{grid-template-columns:1fr}.vs .vs-mid{display:none}}
+.vs-mid{display:grid;place-items:center;font-family:var(--f-display);font-weight:700;color:var(--muted-2);font-size:.8rem;letter-spacing:.14em}
+.vs .card h3{margin-bottom:.4rem}
+
+/* --- Índice --- */
+#index{
+  position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:clamp(1rem,4vh,3rem);
+  background:rgba(4,11,19,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;
+}
+#index.open{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s}
+#index .panel{width:min(64rem,100%);max-height:82vh;overflow-y:auto}
+#index h2{margin-bottom:1rem}
+.idx-grid{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr))}
+.idx-item{
+  display:grid;grid-template-columns:auto 1fr;gap:.75rem;align-items:center;text-align:left;
+  padding:.7rem .9rem;border-radius:.8rem;border:1px solid var(--line);
+  background:var(--glass);transition:background .25s,border-color .25s,transform .25s var(--ease);
+}
+.idx-item:hover{background:var(--glass-2);border-color:var(--brand-2);transform:translateX(.25rem)}
+.idx-item .n{font-family:var(--f-mono);font-size:.72rem;color:var(--brand-3)}
+.idx-item .t{font-size:.82rem;color:var(--txt)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ==========================================================================
+   7. RESPONSIVE: TABLAS -> TARJETAS EN MÓVIL
+   ========================================================================== */
+@media (max-width:720px){
+  /* deja aire para que la barra de navegación no tape el último bloque */
+  .slide{padding-bottom:calc(var(--chrome) + 4.9rem)}
+  .slide-inner{padding-bottom:.4rem}
+  .tbl thead{display:none}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
+  .tbl tbody tr{
+    border:1px solid var(--line);border-radius:15px;margin-bottom:10px;
+    padding:8px 4px;background:rgba(255,255,255,.045);
+  }
+  .tbl tbody tr:last-child{margin-bottom:0}
+  .tbl tbody td{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    border-bottom:1px dashed var(--line);padding:8px 12px;text-align:right;
+  }
+  .tbl tbody tr td:last-child{border-bottom:0}
+  .tbl tbody td::before{
+    content:attr(data-label);text-align:left;font-size:.64rem;letter-spacing:.1em;
+    text-transform:uppercase;font-weight:700;color:var(--muted-2);flex:none;
+  }
+  .tbl tbody td:not(:first-child){font-size:.84rem}
+  .tbl tr.row-total{background:linear-gradient(100deg,rgba(0,138,200,.22),rgba(0,138,200,.05));border-color:rgba(34,184,240,.35)}
+  .tbl .cell-bar{display:none}
+  .tbl .bar{display:none}
+}
+
+/* ==========================================================================
+   8. MOVIMIENTO REDUCIDO / IMPRESIÓN
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  [data-anim],.stagger > *{opacity:1!important;transform:none!important}
+}
+@media print{
+  @page{size:A4 landscape;margin:0}
+  body{overflow:visible;background:#fff}
+  .ambient,.topbar,.navbar,.counter,.progress,#index{display:none!important}
+  #deck{position:static}
+  .slide{
+    position:static;opacity:1!important;visibility:visible!important;transform:none!important;
+    page-break-after:always;break-after:page;min-height:100vh;height:auto;overflow:visible;
+  }
+  [data-anim],.stagger > *{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <span class="orb a"></span><span class="orb b"></span><span class="orb c"></span>
+</div>
+
+<header class="topbar">
+  <img src="assets/img/asta-logo.png" alt="ASTA">
+  <span class="tag">Categorización de ASTA para llegar a 100.000 USD/mes</span>
+</header>
+
+<main id="deck">
+
+  <!-- 01 · PORTADA -->
+  <section class="slide" data-title="Categorización de ASTA para llegar a 100.000 USD/mes">
+    <div class="slide-inner">
+      <div class="cover">
+        <div>
+          <img class="logo" src="assets/img/asta-logo.png" alt="ASTA" data-anim>
+          <h1 data-anim style="margin-top:clamp(14px,2.6vh,26px)">Categorización de ASTA para <span class="grad">llegar a 100.000 USD/mes</span></h1>
+          <p class="lead" data-anim style="margin-top:clamp(10px,1.8vh,18px)">
+            Estas cifras son las del último análisis, que no volví a consultar. Valencia y Caracas venden hoy 53.055,65 USD/mes de ASTA (promedio de junio a septiembre), y la meta exige sumar 46.944,35 USD/mes.
+          </p>
+          <div data-anim style="margin-top:clamp(16px,2.8vh,28px)">
+            <span class="hint">
+              <kbd>←</kbd><kbd>→</kbd> navegar &nbsp;·&nbsp; <kbd>O</kbd> índice &nbsp;·&nbsp; <kbd>F</kbd> pantalla completa
+            </span>
+          </div>
+        </div>
+        <div class="mascot-box" data-anim>
+          <img src="assets/img/asta-mascota.png" alt="Mascota ASTA, el oso panda">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · ESCALA DE CATEGORÍAS -->
+  <section class="slide" data-title="Escala de categorías">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Escala de categorías</h2>
+        <p class="lead" data-anim>La compra mensual es el promedio de ASTA por cliente, agrupado por RIF. El cuatrimestre es ese monto por 4.</p>
+      </div>
+
+      <div class="tbl-wrap" data-anim>
+        <table class="tbl tbl-wide">
+          <thead class="stagger">
+            <tr>
+              <th>Categoría</th>
+              <th class="r">Compra mensual (USD)</th>
+              <th class="r">Cuatrimestre (USD)</th>
+              <th class="r">Meses con compra (de 4)</th>
+              <th class="r">Clientes hoy</th>
+              <th class="r">Compra mensual hoy (USD)</th>
+              <th class="r">Clientes meta</th>
+              <th class="r">Compra mensual meta (USD)</th>
+            </tr>
+          </thead>
+          <tbody class="stagger">
+            <tr>
+              <td data-label="Categoría"><span class="chip diamond">Diamante</span></td>
+              <td class="r num" data-label="Compra mensual (USD)">≥ 3.000,00</td>
+              <td class="r num" data-label="Cuatrimestre (USD)">≥ 12.000,00</td>
+              <td class="r" data-label="Meses con compra (de 4)">3 o más</td>
+              <td class="r num" data-label="Clientes hoy">1</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">3.920,00</td>
+              <td class="r num" data-label="Clientes meta">6</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">21.600,00</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip gold">Oro</span></td>
+              <td class="r num" data-label="Compra mensual (USD)">1.500,00 – 2.999,99</td>
+              <td class="r num" data-label="Cuatrimestre (USD)">6.000,00 – 11.999,99</td>
+              <td class="r" data-label="Meses con compra (de 4)">3 o más</td>
+              <td class="r num" data-label="Clientes hoy">5</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">9.082,00</td>
+              <td class="r num" data-label="Clientes meta">12</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">24.000,00</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip silver">Plata</span></td>
+              <td class="r num" data-label="Compra mensual (USD)">600,00 – 1.499,99</td>
+              <td class="r num" data-label="Cuatrimestre (USD)">2.400,00 – 5.999,99</td>
+              <td class="r" data-label="Meses con compra (de 4)">3 o más</td>
+              <td class="r num" data-label="Clientes hoy">14</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">12.806,00</td>
+              <td class="r num" data-label="Clientes meta">24</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">22.800,00</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip bronze">Bronce</span></td>
+              <td class="r num" data-label="Compra mensual (USD)">250,00 – 599,99</td>
+              <td class="r num" data-label="Cuatrimestre (USD)">1.000,00 – 2.399,99</td>
+              <td class="r" data-label="Meses con compra (de 4)">2 o más</td>
+              <td class="r num" data-label="Clientes hoy">29</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">11.149,00</td>
+              <td class="r num" data-label="Clientes meta">45</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">18.000,00</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip general">Cliente general</span></td>
+              <td class="r num muted" data-label="Compra mensual (USD)">&lt; 250,00</td>
+              <td class="r muted" data-label="Cuatrimestre (USD)">—</td>
+              <td class="r muted" data-label="Meses con compra (de 4)">—</td>
+              <td class="r num" data-label="Clientes hoy">260</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">16.115,00</td>
+              <td class="r num" data-label="Clientes meta">resto</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">13.600,00</td>
+            </tr>
+            <tr class="row-total">
+              <td data-label="Categoría">Total</td>
+              <td class="r muted" data-label="Compra mensual (USD)">—</td>
+              <td class="r muted" data-label="Cuatrimestre (USD)">—</td>
+              <td class="r muted" data-label="Meses con compra (de 4)">—</td>
+              <td class="r num" data-label="Clientes hoy">309</td>
+              <td class="r num" data-label="Compra mensual hoy (USD)">53.072,00</td>
+              <td class="r muted" data-label="Clientes meta">—</td>
+              <td class="r num" data-label="Compra mensual meta (USD)">100.000,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · NOTAS SOBRE LA ESCALA -->
+  <section class="slide" data-title="Programa, Diamante, metas por nivel y diferencia de redondeo">
+    <div class="slide-inner">
+      <div class="grid g-2">
+        <div class="card" data-anim>
+          <h3 style="color:var(--brand-3)">Programa</h3>
+          <p style="color:var(--muted);font-size:.9rem;margin-top:.5rem">Pasa de 49 a 87 clientes. Con la regla de fidelidad, hoy solo cumplen 22 (0 en Diamante, 3 en Oro, 6 en Plata y 13 en Bronce).</p>
+        </div>
+        <div class="card" data-anim>
+          <h3 style="color:var(--brand-3)">Diamante</h3>
+          <p style="color:var(--muted);font-size:.9rem;margin-top:.5rem">El único cliente que llega por monto es Servitems, que compró 15.680,00 USD en un solo mes. La meta exige volver recurrentes a clientes que hoy compran de golpe.</p>
+        </div>
+        <div class="card" data-anim>
+          <h3 style="color:var(--brand-3)">Metas por nivel</h3>
+          <p style="color:var(--muted);font-size:.9rem;margin-top:.5rem">Son un escenario mío, no una proyección. Cada vendedor debe validarlas con su cartera.</p>
+        </div>
+        <div class="card" data-anim>
+          <h3 style="color:var(--brand-3)">Diferencia de redondeo</h3>
+          <p style="color:var(--muted);font-size:.9rem;margin-top:.5rem">La tabla suma 53.072,00 contra 53.055,65 del promedio real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · ESCALA ANTERIOR, PARA COMPARAR -->
+  <section class="slide" data-title="Escala anterior, para comparar">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Escala anterior, para comparar</h2>
+      </div>
+
+      <div class="grid g-2" style="align-items:stretch">
+        <div class="card" data-anim>
+          <p class="lead">Era una escala más baja (Diamante desde 1.500, Oro desde 800, Plata desde 400 y Bronce desde 150 al mes).</p>
+        </div>
+        <div class="card kpi accent" data-anim>
+          <div class="k-label">Clientes en el programa</div>
+          <div class="k-value"><span data-count="61" data-dec="0">0</span></div>
+          <div class="k-sub">La reemplacé por la de arriba porque está calibrada a la meta de 100.000 USD.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · CLIENTES MÁS CERCANOS A LOS NIVELES ALTOS -->
+  <section class="slide" data-title="Clientes más cercanos a los niveles altos">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Clientes más cercanos a los niveles altos <span style="color:var(--muted-2);font-weight:500">(escala anterior, mensual de ASTA)</span></h2>
+      </div>
+
+      <div class="tbl-wrap" data-anim>
+        <table class="tbl">
+          <thead class="stagger">
+            <tr>
+              <th>Cliente</th>
+              <th class="r">Compra mensual (USD)</th>
+              <th class="r">Meses</th>
+              <th class="r">Margen %</th>
+            </tr>
+          </thead>
+          <tbody class="stagger">
+            <tr>
+              <td data-label="Cliente">Ciudad Digital</td>
+              <td class="r num" data-label="Compra mensual (USD)">2.179,76</td>
+              <td class="r" data-label="Meses">4</td>
+              <td class="r num" data-label="Margen %">46,06</td>
+            </tr>
+            <tr>
+              <td data-label="Cliente">Cintas y Rollos Ríos</td>
+              <td class="r num" data-label="Compra mensual (USD)">1.691,89</td>
+              <td class="r" data-label="Meses">3</td>
+              <td class="r num" data-label="Margen %">49,27</td>
+            </tr>
+            <tr>
+              <td data-label="Cliente">Servicios Resucon</td>
+              <td class="r num" data-label="Compra mensual (USD)">1.679,55</td>
+              <td class="r" data-label="Meses">4</td>
+              <td class="r num" data-label="Margen %">47,78</td>
+            </tr>
+            <tr>
+              <td data-label="Cliente">Digibytex Corp</td>
+              <td class="r num" data-label="Compra mensual (USD)">1.502,18</td>
+              <td class="r" data-label="Meses">3</td>
+              <td class="r num" data-label="Margen %">44,15</td>
+            </tr>
+            <tr>
+              <td data-label="Cliente">Copikag Global</td>
+              <td class="r num" data-label="Compra mensual (USD)">1.225,02</td>
+              <td class="r" data-label="Meses">3</td>
+              <td class="r num" data-label="Margen %">46,67</td>
+            </tr>
+            <tr>
+              <td data-label="Cliente">Inversiones Pulsar Alianza</td>
+              <td class="r num" data-label="Compra mensual (USD)">1.159,38</td>
+              <td class="r" data-label="Meses">3</td>
+              <td class="r num" data-label="Margen %">44,95</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tbl-note" data-anim>Con la escala nueva, estos clientes quedan en Oro y Plata. Todavía no armé el listado definitivo por categoría con la escala nueva.</p>
+    </div>
+  </section>
+
+  <!-- 06 · BENEFICIOS (ACUMULATIVOS) -->
+  <section class="slide" data-title="Beneficios (acumulativos)">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Beneficios (acumulativos)</h2>
+      </div>
+
+      <div class="tbl-wrap" data-anim>
+        <table class="tbl">
+          <thead class="stagger">
+            <tr>
+              <th>Categoría</th>
+              <th>Beneficios</th>
+            </tr>
+          </thead>
+          <tbody class="stagger">
+            <tr>
+              <td data-label="Categoría"><span class="chip bronze">Bronce</span></td>
+              <td data-label="Beneficios">Material POP digital</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip silver">Plata</span></td>
+              <td data-label="Beneficios">Lo de Bronce, el mismo apoyo y colaboraciones con la marca</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip gold">Oro</span></td>
+              <td data-label="Beneficios">Lo de Plata, prioridad en tóner de alta rotación y más crédito</td>
+            </tr>
+            <tr>
+              <td data-label="Categoría"><span class="chip diamond">Diamante</span></td>
+              <td data-label="Beneficios">Lo de Oro, desarrollo de piso de ventas y MDF de 1,5 % del margen</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · MDF DE DIAMANTE Y PISO DE VENTAS -->
+  <section class="slide" data-title="MDF de Diamante y piso de ventas">
+    <div class="slide-inner">
+      <div class="grid g-2" style="align-items:stretch">
+        <div class="card" data-anim>
+          <div class="k-label">MDF de Diamante</div>
+          <p class="lead" style="margin-top:.6rem">Unos <span style="color:var(--diamond);font-weight:700">152,00 USD/mes</span> con 6 clientes. Se paga solo si el cliente factura.</p>
+        </div>
+        <div class="card" data-anim>
+          <div class="k-label">Piso de ventas y colaboraciones</div>
+          <p style="color:var(--muted);font-size:.95rem;margin-top:.6rem">No tienen presupuesto. Conviene que las cofinancie la marca.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · CRECIMIENTO Y PLAN DE COMPRAS -->
+  <section class="slide" data-title="Crecimiento y plan de compras">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Crecimiento y plan de compras</h2>
+      </div>
+
+      <div class="tbl-wrap" data-anim>
+        <table class="tbl">
+          <thead class="stagger">
+            <tr>
+              <th>Palanca</th>
+              <th class="r">USD/mes</th>
+              <th aria-hidden="true"></th>
+            </tr>
+          </thead>
+          <tbody class="stagger">
+            <tr>
+              <td data-label="Palanca"><span class="chip diamond">Diamante</span> <span class="muted">de 1 a 6 clientes</span></td>
+              <td class="r num" data-label="USD/mes" style="color:var(--diamond)">+17.680,00</td>
+              <td class="cell-bar" aria-hidden="true"><div class="bar"><i class="diamond" data-bar="100"></i></div></td>
+            </tr>
+            <tr>
+              <td data-label="Palanca"><span class="chip gold">Oro</span> <span class="muted">de 5 a 12 clientes</span></td>
+              <td class="r num" data-label="USD/mes" style="color:var(--gold)">+14.918,00</td>
+              <td class="cell-bar" aria-hidden="true"><div class="bar"><i class="gold" data-bar="84"></i></div></td>
+            </tr>
+            <tr>
+              <td data-label="Palanca"><span class="chip silver">Plata</span> <span class="muted">de 14 a 24 clientes</span></td>
+              <td class="r num" data-label="USD/mes" style="color:var(--silver)">+9.994,00</td>
+              <td class="cell-bar" aria-hidden="true"><div class="bar"><i class="silver" data-bar="57"></i></div></td>
+            </tr>
+            <tr>
+              <td data-label="Palanca"><span class="chip bronze">Bronce</span> <span class="muted">de 29 a 45 clientes</span></td>
+              <td class="r num" data-label="USD/mes" style="color:var(--bronze)">+6.851,00</td>
+              <td class="cell-bar" aria-hidden="true"><div class="bar"><i class="bronze" data-bar="39"></i></div></td>
+            </tr>
+            <tr>
+              <td data-label="Palanca"><span class="chip general">Cliente general</span> <span class="muted">algunos suben de categoría</span></td>
+              <td class="r num" data-label="USD/mes" style="color:var(--pink)">−2.515,00</td>
+              <td class="cell-bar" aria-hidden="true"><div class="bar"><i class="neg" data-bar="14"></i></div></td>
+            </tr>
+            <tr class="row-total">
+              <td data-label="Palanca">Total</td>
+              <td class="r num" data-label="USD/mes" style="color:var(--brand-3)">+46.928,00</td>
+              <td class="cell-bar" aria-hidden="true"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · INVENTARIO -->
+  <section class="slide" data-title="Inventario">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Inventario</h2>
+      </div>
+
+      <div class="grid g-3">
+        <div class="card kpi" data-anim>
+          <div class="k-label">En bodega</div>
+          <div class="k-value"><span class="k-cur">~</span><span data-count="62500" data-dec="0">0</span> <span class="k-cur">unidades</span></div>
+          <div class="k-sub">~206.600,00 USD</div>
+        </div>
+        <div class="card kpi" data-anim>
+          <div class="k-label">Por recibir</div>
+          <div class="k-value"><span class="k-cur">~</span><span data-count="50339" data-dec="0">0</span> <span class="k-cur">unidades</span></div>
+          <div class="k-sub">~123.000,00 USD</div>
+        </div>
+        <div class="card kpi accent" data-anim>
+          <div class="k-label">Se necesitan</div>
+          <div class="k-value"><span class="k-cur">~</span><span data-count="165000" data-dec="2">0</span> <span class="k-cur">USD</span></div>
+          <div class="k-sub">para 3 meses a 100 mil</div>
+        </div>
+      </div>
+
+      <div class="callout good" data-anim style="margin-top:clamp(12px,2vh,20px)">
+        <div class="ico">✓</div>
+        <div><p style="font-size:.95rem;color:var(--txt)">Así que el stock ya alcanza.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · COMPRAS NUEVAS SUGERIDAS -->
+  <section class="slide" data-title="Compras nuevas sugeridas">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>Compras nuevas sugeridas</h2>
+        <p class="lead" data-anim>Unas 1.630 unidades, ~15.000,00 USD, en cinco productos.</p>
+      </div>
+
+      <div class="tbl-wrap" data-anim>
+        <table class="tbl">
+          <thead class="stagger">
+            <tr>
+              <th>Producto</th>
+              <th class="r">Unidades</th>
+            </tr>
+          </thead>
+          <tbody class="stagger">
+            <tr><td data-label="Producto">Canon T06 sin chip</td><td class="r num" data-label="Unidades">420</td></tr>
+            <tr><td data-label="Producto">HP W1500A</td><td class="r num" data-label="Unidades">400</td></tr>
+            <tr><td data-label="Producto">Canon CRG-070H</td><td class="r num" data-label="Unidades">340</td></tr>
+            <tr><td data-label="Producto">Tóner W1105X en Caracas</td><td class="r num" data-label="Unidades">240</td></tr>
+            <tr><td data-label="Producto">Tóner W1105A</td><td class="r num" data-label="Unidades">230</td></tr>
+            <tr class="row-total"><td data-label="Producto">Total</td><td class="r num" data-label="Unidades">1.630</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · NO COMPRAR O REPROGRAMAR -->
+  <section class="slide" data-title="No comprar o reprogramar">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <h2 data-anim>No comprar o reprogramar</h2>
+      </div>
+
+      <div class="card" data-anim>
+        <p class="lead">El CB435A/436A/278A/285A y el Canon T03 liberarían unos 70.700,00 USD.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · CIERRE -->
+  <section class="slide" data-title="ASTA">
+    <div class="slide-inner">
+      <div class="cover">
+        <div>
+          <img class="logo" src="assets/img/asta-logo.png" alt="ASTA" data-anim>
+          <h2 data-anim style="margin-top:clamp(14px,2.6vh,26px)">Categorización de ASTA para <span class="grad">llegar a 100.000 USD/mes</span></h2>
+        </div>
+        <div class="mascot-box" data-anim>
+          <img src="assets/img/asta-mascota.png" alt="Mascota ASTA, el oso panda">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ ÍNDICE ============ -->
+<div id="index" role="dialog" aria-modal="true" aria-label="Índice de la presentación">
+  <div class="panel">
+    <p class="eyebrow">Navegación rápida</p>
+    <h2 style="margin-bottom:16px">Índice</h2>
+    <div class="idx-grid" id="idxGrid"></div>
+    <p style="margin-top:18px;font-size:.74rem;color:var(--muted-2)">Pulsa <kbd>O</kbd> o <kbd>Esc</kbd> para cerrar.</p>
+  </div>
+</div>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<div class="counter">
+  <span><b id="cur">01</b> / <span id="tot">14</span></span>
+  <span class="hint" id="curTitle"></span>
+</div>
+
+<nav class="navbar" aria-label="Controles de la presentación">
+  <button class="nav-btn wide" id="btnIndex" title="Índice (O)">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Índice</span>
+  </button>
+  <button class="nav-btn" id="btnPrev" title="Anterior (←)" aria-label="Anterior">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="nav-btn" id="btnNext" title="Siguiente (→)" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <button class="nav-btn" id="btnFull" title="Pantalla completa (F)" aria-label="Pantalla completa">
+    <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  </button>
+</nav>
+
+<div class="progress" aria-hidden="true"><i id="prog"></i></div>
+
+<script>
+/* ==========================================================================
+   MOTOR DE PRESENTACIÓN — vanilla JS, sin dependencias
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var total  = slides.length;
+  var index  = 0;
+  var busy   = false;
+
+  var elCur   = document.getElementById("cur");
+  var elTot   = document.getElementById("tot");
+  var elProg  = document.getElementById("prog");
+  var elTitle = document.getElementById("curTitle");
+  var deck    = document.getElementById("deck");
+  var indexBox= document.getElementById("index");
+  var idxGrid = document.getElementById("idxGrid");
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Formato de números (es-VE: 1.234,56) ---------- */
+  function fmt(n, dec) {
+    dec = typeof dec === "number" ? dec : 2;
+    var fixed = Math.abs(n).toFixed(dec);
+    var parts = fixed.split(".");
+    var int = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    var out = int + (dec > 0 ? "," + parts[1] : "");
+    return (n < 0 ? "-" : "") + out;
+  }
+
+  /* ---------- Contadores animados ---------- */
+  function runCounters(slide) {
+    slide.querySelectorAll("[data-count]").forEach(function (el) {
+      var target   = parseFloat(el.dataset.count) || 0;
+      var decimals = parseInt(el.dataset.dec, 10);
+      if (isNaN(decimals)) decimals = 0;
+
+      if (reduced) { el.textContent = fmt(target, decimals); return; }
+
+      var dur = 1150;
+      var start = null;
+      var from = 0;
+      var settled = false;
+
+      // Seguro: si la pestaña está en segundo plano, rAF se pausa.
+      // Este temporizador garantiza que el valor final siempre se escriba.
+      function settle() {
+        if (settled) return;
+        settled = true;
+        el.textContent = fmt(target, decimals);
+      }
+      window.setTimeout(settle, dur + 500);
+
+      function frame(ts) {
+        if (settled) return;
+        if (start === null) start = ts;
+        var t = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - t, 3);          // easeOutCubic
+        var v = from + (target - from) * eased;
+        el.textContent = fmt(v, decimals);
+        if (t < 1) requestAnimationFrame(frame);
+        else settle();
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  /* ---------- Barras ---------- */
+  /* No dependemos de requestAnimationFrame: si la ventana está minimizada
+     o la pestaña en segundo plano, rAF se pausa y las barras quedarían
+     vacías. Forzamos reflow y fijamos el ancho de inmediato; la transición
+     CSS se encarga de la animación. */
+  function runBars(slide) {
+    slide.querySelectorAll("[data-bar]").forEach(function (el) {
+      el.style.width = "0%";
+      void el.offsetWidth;
+      el.style.width = el.dataset.bar + "%";
+    });
+  }
+  function resetBars(slide) {
+    slide.querySelectorAll("[data-bar]").forEach(function (el) {
+      var prev = el.style.transition;
+      el.style.transition = "none";
+      el.style.width = "0%";
+      void el.offsetWidth;
+      el.style.transition = prev;
+    });
+  }
+
+  /* ---------- Numeración de stagger (asigna --i en orden de DOM) ---------- */
+  function numberAnimations(slide) {
+    var nodes = slide.querySelectorAll("[data-anim], .stagger > *");
+    var seen = [];
+    Array.prototype.slice.call(nodes).forEach(function (el) {
+      if (seen.indexOf(el) !== -1) return;
+      seen.push(el);
+      el.style.setProperty("--i", String(seen.length - 1));
+    });
+  }
+
+  /* ---------- Activar / desactivar ---------- */
+  function activate(slide) {
+    numberAnimations(slide);
+    slide.classList.add("is-active");
+    // Se ejecutan de inmediato (no dentro de rAF): así funcionan también con
+    // la ventana minimizada o la pestaña en segundo plano.
+    runCounters(slide);
+    runBars(slide);
+  }
+
+  function deactivate(slide, dir) {
+    slide.classList.remove("is-active");
+    slide.style.setProperty("--tx", dir > 0 ? "-4%" : "4%");
+    resetBars(slide);
+  }
+
+  /* ---------- Navegación ---------- */
+  function go(next, opts) {
+    opts = opts || {};
+    if (busy && !opts.force) return;
+    next = Math.max(0, Math.min(total - 1, next));
+    if (next === index && !opts.force) return;
+
+    var dir = next > index ? 1 : -1;
+    var current = slides[index];
+    var target  = slides[next];
+
+    busy = true;
+    window.setTimeout(function () { busy = false; }, reduced ? 10 : 480);
+
+    // posición de entrada según dirección
+    target.style.setProperty("--tx", dir > 0 ? "4%" : "-4%");
+    void target.offsetWidth;                      // fuerza reflow: la entrada se anima
+
+    if (current !== target) deactivate(current, dir);
+    activate(target);
+
+    index = next;
+    syncUI();
+  }
+
+  function syncUI() {
+    elCur.textContent = String(index + 1).padStart(2, "0");
+    elProg.style.width = (total > 1 ? (index / (total - 1)) * 100 : 100) + "%";
+    elTitle.textContent = slides[index].dataset.title || "";
+    document.body.classList.toggle("is-cover", index === 0);
+
+    if (history.replaceState) history.replaceState(null, "", "#" + (index + 1));
+  }
+
+  var btnPrev = document.getElementById("btnPrev");
+  var btnNext = document.getElementById("btnNext");
+  function refreshButtons() {
+    btnPrev.disabled = index === 0;
+    btnNext.disabled = index === total - 1;
+  }
+  var _syncUI = syncUI;
+  syncUI = function () { _syncUI(); refreshButtons(); };
+
+  /* ---------- Índice en pantalla ---------- */
+  slides.forEach(function (s, i) {
+    var b = document.createElement("button");
+    b.className = "idx-item";
+    b.type = "button";
+    b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, "0") + '</span>' +
+                  '<span class="t"></span>';
+    b.querySelector(".t").textContent = s.dataset.title || ("Diapositiva " + (i + 1));
+    b.addEventListener("click", function () { closeIndex(); go(i); });
+    idxGrid.appendChild(b);
+  });
+
+  function openIndex()  { indexBox.classList.add("open"); }
+  function closeIndex() { indexBox.classList.remove("open"); }
+  function toggleIndex(){ indexBox.classList.contains("open") ? closeIndex() : openIndex(); }
+
+  /* ---------- Pantalla completa ---------- */
+  function toggleFull() {
+    if (!document.fullscreenElement) {
+      if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+
+  /* ---------- Interacción ---------- */
+  btnNext.addEventListener("click", function () { go(index + 1); });
+  btnPrev.addEventListener("click", function () { go(index - 1); });
+  document.getElementById("btnFull").addEventListener("click", toggleFull);
+  document.getElementById("btnIndex").addEventListener("click", toggleIndex);
+  indexBox.addEventListener("click", function (e) { if (e.target === indexBox) closeIndex(); });
+
+  document.addEventListener("keydown", function (e) {
+    var k = e.key;
+    if (k === "Escape") { closeIndex(); return; }
+    if (indexBox.classList.contains("open")) return;
+
+    if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown" || k === " " || k === "Enter") {
+      e.preventDefault(); go(index + 1);
+    } else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp") {
+      e.preventDefault(); go(index - 1);
+    } else if (k === "Home") { e.preventDefault(); go(0); }
+    else if (k === "End")  { e.preventDefault(); go(total - 1); }
+    else if (k === "f" || k === "F") { toggleFull(); }
+    else if (k === "o" || k === "O") { toggleIndex(); }
+  });
+
+  /* ---------- Swipe táctil ---------- */
+  var tX = 0, tY = 0, tracking = false;
+  deck.addEventListener("touchstart", function (e) {
+    if (e.touches.length !== 1) return;
+    tX = e.touches[0].clientX; tY = e.touches[0].clientY; tracking = true;
+  }, { passive: true });
+  deck.addEventListener("touchend", function (e) {
+    if (!tracking) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - tX, dy = t.clientY - tY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      go(index + (dx < 0 ? 1 : -1));
+    }
+  }, { passive: true });
+
+  /* ---------- Punto de entrada ---------- */
+  var start = 0;
+  var m = /^#(\d+)$/.exec(location.hash || "");
+  if (m) {
+    var n = parseInt(m[1], 10) - 1;
+    if (n >= 0 && n < total) start = n;
+  }
+
+  elTot.textContent = String(total).padStart(2, "0");
+  slides[start].style.setProperty("--tx", "0%");
+  activate(slides[start]);
+  index = start;
+  syncUI();
+
+  // recalcula barras/counters al girar el móvil (por si el layout cambia)
+  var rt;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      numberAnimations(slides[index]);
+      runBars(slides[index]);
+    }, 220);
+  });
+})();
+</script>
+</body>
+</html>
